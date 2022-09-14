@@ -46,10 +46,17 @@ namespace ByteBank
 
         private static int Dividir(int numero, int divisor)
         {
-            ContaCorrente conta = null;
-           // Console.WriteLine(conta.Saldo);
+            try
+            {
+                return numero / divisor;
+            }
+            catch
+            {
+                Console.WriteLine("Execeção com numero = " + numero +"e divisor = " + divisor);
+                throw; // throw vai laçar a execeção para a proxima, lançado os resultados dos valores reais de numero e divisor 
+            }
          
-            return numero / divisor;
+           
         }
     }
 }
