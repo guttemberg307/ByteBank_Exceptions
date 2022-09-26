@@ -10,6 +10,8 @@ namespace ByteBank
         public Cliente Titular { get; set; }
 
         public static int TotalDeContasCriadas { get; private set; }
+        public static int ContadorSaquesNaoPermitidos { get; private set; }
+        public static int TransferenciasNaoPermitidas { get; private set; }
 
         public int Numero { get; } // cria o campo privado somente leitura de Numero
         public int Agencia { get; } // somente leitura
@@ -65,6 +67,7 @@ namespace ByteBank
            
             if (_saldo < valor)
             {
+                ContadorSaquesNaoPermitidos++;// contador 
                 throw new SaldoInsuficienteException(Saldo,valor); //Saldo da conta , valor do saque 
             }
 
@@ -84,8 +87,19 @@ namespace ByteBank
             {
                 throw new ArgumentException("valor inválido para transferencia ", nameof(valor)); // trasfoma a classe valor em uma string 
             }
-
-            Sacar(valor);
+            try
+            {
+                Sacar(valor);
+            }
+            catch(SaldoInsuficienteException )
+            {
+                TransferenciasNaoPermitidas++;
+                throw; //é preenchido a propriedade stacktrace, permitindo a rastreio da pilha com ex so ira aparecer o metodo transferir omitindo o metodo sacar 
+                       // throw ex -- dessa forma so preenche o erro correto sem fazer a trilha do stack trace, perdendo a informação da pilha de chamadas
+                       // somente com o Catch podemos passar a execeção sem o objeto sendo assim o retorno sera SaldoInsuficienteException )
+                
+            }
+            
             contaDestino.Depositar(valor);
             
         }
