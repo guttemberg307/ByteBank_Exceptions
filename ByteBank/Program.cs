@@ -10,62 +10,28 @@ namespace ByteBank
     class Program
     {
         static void Main(string[] args)
+        
         {
             try
             {
-                ContaCorrente conta = new ContaCorrente(456, 5640);
-                ContaCorrente conta2 = new ContaCorrente(456, 564487);
+                ContaCorrente conta1 = new ContaCorrente(4584, 584765);
+                ContaCorrente conta2 = new ContaCorrente(44578, 854547);
 
-                conta2.Transferir(10000, conta);
-
-                conta.Depositar(50);
-                Console.WriteLine(conta.Saldo);
-                conta.Sacar(-500);
-                Console.WriteLine(conta.Saldo);
+                conta1.Transferir(10000, conta2);
             }
-            catch(ArgumentException ex)
+            catch(OperacaoFinanceiraException e)
             {
-                Console.WriteLine("Argumento com problema : " + ex.ParamName);//ParamName retorna um parametro especifico
-                Console.WriteLine("Ocorreu um erro do tipo ArgumentException");
-                Console.WriteLine(ex.Message);
-            }
-            catch (SaldoInsuficienteException ex )
-            {
-                Console.WriteLine(ex.Saldo);
-                Console.WriteLine(ex.ValorSaque);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
 
-                Console.WriteLine(ex.StackTrace); // faz o rastreio da pilha de execução
+                Console.WriteLine("Informações da INNER EXECEPTION (exceção interna):");
 
-                Console.WriteLine(ex.Message);
-                Console.WriteLine("Exceção do tipo SaldoInsuficienteException");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(e.InnerException.Message); // lembrando que so colocamos em evidencia a InnerExecption somente para visualização
+                Console.WriteLine(e.InnerException.StackTrace); // poque o cliente so ira ver Operação nao realizada
             }
 
-          //  Metodo();
-
-            Console.WriteLine("Execução finalizada.tecle enter para sair.");
+            Console.WriteLine("Execução finalizada. Tecle enter para sair");
             Console.ReadLine();
-         
-
-            //try
-            //{
-            //    Metodo();
-            //}
-            //catch(DivideByZeroException e)// DivideByZeroException trata um especificamente uma exceção, porem ela sempre tem que vi acima da (Exception erro) 
-            //{                                // caso coloque abaixo vai surgir um erro explicando que a (Exception erro) ja faz a tratativa do erro.
-            //    Console.WriteLine("Não é possível divisão por zero.");
-            //}
-            //catch (Exception e) //Exception faz o tratamento de todas as exceções
-            //{
-            //    Console.WriteLine(e.Message);
-            //    Console.WriteLine(e.StackTrace); //--StackTrace faz o rastreio da pilha de metodos
-            //    Console.WriteLine("Aconteceu um erro!");
-            //}
-
-
         }
         //Teste com a cadeia de chamada:
         //Metodo -> TestaDivisao -> Dividir

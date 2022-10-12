@@ -91,12 +91,12 @@ namespace ByteBank
             {
                 Sacar(valor);
             }
-            catch(SaldoInsuficienteException )
+            catch(SaldoInsuficienteException ex)
             {
                 TransferenciasNaoPermitidas++;
-                throw; //é preenchido a propriedade stacktrace, permitindo a rastreio da pilha com ex so ira aparecer o metodo transferir omitindo o metodo sacar 
-                       // throw ex -- dessa forma so preenche o erro correto sem fazer a trilha do stack trace, perdendo a informação da pilha de chamadas
-                       // somente com o Catch podemos passar a execeção sem o objeto sendo assim o retorno sera SaldoInsuficienteException )
+                throw new OperacaoFinanceiraException("Operação não realizada.", ex);
+                // Essa Exception foi criada usando o parametro do contrutor de menssagem junto com EX que é a exceção que gerou esse problema
+                // que é chamado de INNEREXCPTION
                 
             }
             
