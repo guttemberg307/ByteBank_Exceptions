@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace ByteBank
 {
-    public class LeitorDeArquivo
+    public class LeitorDeArquivo : IDisposable
     {
         public string Arquivo { get; }
 
         public LeitorDeArquivo(string arquivo)
         {
             Arquivo = arquivo;
+         
 
-            throw new FileNotFoundException(); //execeção definida no.NET quando não é encontrado um arquivo
+
+          //  throw new FileNotFoundException(); //execeção definida no.NET quando não é encontrado um arquivo
 
             Console.WriteLine("Abrindo arquivo: " + arquivo);
         }
@@ -24,14 +26,17 @@ namespace ByteBank
         {
             Console.WriteLine("Lendo linha...");
 
-            //throw new IOException();// execeção definida no .NET onde tem imput e output/ entrada e saida 
+           throw new IOException();// execeção definida no .NET onde tem imput e output/ entrada e saida 
 
             return "Linha do arquivo";
         }
 
-        public void Fechar()
-        {
+        public void Dispose()
+         {
+            // metodo que tem a responsabiliadde de liberar os recursos 
+            //
             Console.WriteLine("Fechando arquivo.");
+           
         }
     }
 }

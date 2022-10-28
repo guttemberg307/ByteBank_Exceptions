@@ -12,7 +12,14 @@ namespace ByteBank
     {
         static void Main(string[] args)
         {
-            CarregarContas();
+            try
+            {
+                CarregarContas();
+            }
+            catch(Exception) // por nao ser uma boa pratica somente para aplicação não fechar
+            {
+                Console.WriteLine("CATCH NO METODO MAIN");
+            }
 
             Console.WriteLine("Execução finalizada. Tecle enter para sair");
             Console.ReadLine();
@@ -20,27 +27,31 @@ namespace ByteBank
 
         private static void CarregarContas() //metodo de carregar contas 
         {
-            LeitorDeArquivo leitor = null; // leitor recebe o resultado nulo 
-            try
-            {
-                leitor = new LeitorDeArquivo("contasl.txt"); // inscia do leitor de arquivos com o arquivo contas.txt para leitura 
 
+            using ( LeitorDeArquivo leitor = new LeitorDeArquivo("teste.txt"))
+            {
+                //IDispo
                 leitor.LerProximaLinha();
-                leitor.LerProximaLinha();
-                leitor.LerProximaLinha();
+            }
 
-            }
-            catch (IOException)
-            {
-                Console.WriteLine("Exceção do tipo IOException capturada e tratada!");
-            }
-            finally// Finally vai ser executanto sempre aconteça uma exceção ou não.
-            {
-                if (leitor != null) // se for diferente de nulo fechara autmaticamente caso não seja nulo a exceção sera tratada pois não foi encontrato o arquivo
-                {
-                    leitor.Fechar();
-                }
-            }
+
+            //LeitorDeArquivo leitor = null; // leitor recebe o resultado nulo 
+            //try
+            //{
+            //    leitor = new LeitorDeArquivo("contasl.txt"); // inscia do leitor de arquivos com o arquivo contas.txt para leitura 
+
+            //    leitor.LerProximaLinha();
+            //    leitor.LerProximaLinha();
+            //    leitor.LerProximaLinha();
+
+            //}// permos ter um try ou um catch mais vai ser obrigatorio ter um finally 
+            //finally// Finally vai ser executanto sempre aconteça uma exceção ou não.
+            //{
+            //    if (leitor != null) // se for diferente de nulo fechara autmaticamente caso não seja nulo a exceção sera tratada pois não foi encontrato o arquivo
+            //    {
+            //        leitor.Fechar();
+            //    }
+            //}
         }
         private static void TestaInnerException()
         {
